@@ -490,7 +490,7 @@ namespace KamalPashFabricsC_Sharp
                 Location = new Point(30, pinkHeaderPanel.Height + blueHeaderPanel.Height + 15),
                 Size = new Size(680, 420),
                 BackColor = Color.White,
-                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom
+                Anchor = AnchorStyles.Top | AnchorStyles.Left
             };
 
             Font labelFont = new Font("Arial", 10, FontStyle.Bold);
@@ -795,7 +795,7 @@ namespace KamalPashFabricsC_Sharp
                 Location = new Point(this.ClientSize.Width - 380, pinkHeaderPanel.Height + blueHeaderPanel.Height + 30),
                 Size = new Size(350, 420),
                 BackColor = Color.White,
-                Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom
+                Anchor = AnchorStyles.Top | AnchorStyles.Right
             };
 
             int labelWidth = 120;
@@ -1175,11 +1175,18 @@ namespace KamalPashFabricsC_Sharp
             btnNewInitialBox.Top = (blueHeaderPanel.Height - btnNewInitialBox.Height) / 2;
             btnCopy.Top = (blueHeaderPanel.Height - btnCopy.Height) / 2;
 
+            // Calculate available height for panels with equal top and bottom gaps
+            int topGap = 15;
+            int bottomGap = 15;
+            int headersHeight = pinkHeaderPanel.Height + blueHeaderPanel.Height;
+            int availableHeight = this.ClientSize.Height - headersHeight - topGap - bottomGap;
+
             if (rightFieldsPanel != null)
             {
                 // Simple positioning like your old code but with proper bounds
                 rightFieldsPanel.Left = btnSelectQuotation.Left - 160;
-                rightFieldsPanel.Top = pinkHeaderPanel.Height + blueHeaderPanel.Height + 15;
+                rightFieldsPanel.Top = headersHeight + topGap;
+                rightFieldsPanel.Height = availableHeight;
 
                 // Ensure it doesn't go out of bounds
                 if (rightFieldsPanel.Right > this.ClientSize.Width - 30)
@@ -1195,6 +1202,9 @@ namespace KamalPashFabricsC_Sharp
 
             if (leftFieldsPanel != null)
             {
+                leftFieldsPanel.Top = headersHeight + topGap;
+                leftFieldsPanel.Height = availableHeight;
+
                 // Adjust left panel width if needed
                 if (rightFieldsPanel != null && leftFieldsPanel.Right > rightFieldsPanel.Left - 20)
                 {
